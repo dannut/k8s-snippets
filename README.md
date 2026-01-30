@@ -6,9 +6,10 @@ This repository contains a collection of reusable YAML snippets for common Kuber
 
 Files are organized by resource type:
 
-```text
+```
 k8s-snippets/
 ├── workloads/      # Deployments, StatefulSets, DaemonSets
 ├── networking/     # Services, Ingress
 ├── config/         # ConfigMaps, Secrets
 └── examples/       # Full stack examples
+```
