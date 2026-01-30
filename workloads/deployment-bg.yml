@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evrika-backend          # deployment name
+  namespace: default            # namespace-ul (production if exists)
+  labels:
+    app: evrika-backend
+spec:
+  replicas: 2                   # 2 copies for safety
+  strategy:
+    type: RollingUpdate         # update without downtime
+    rollingUpdate:
+      maxSurge: 1               # 1 extra pod during update
+      maxUnavailable: 0         # 0 pod
+  selector:
+    matchLabels:
+      app: evrika-backend
+  template:
+    metadata:
+      labels:
+        app: evrika-backend
+    spec:
+      containers:
+      - name: backend-container
+        image: my-repo/backend:v1.0  # replace with actual image from registry(github)
+        imagePullPolicy: Always
+        
+        # 1. server protection (resurse)
+        resources:
+          requests:
+            memory: "64Mi"      # start with less
+            cpu: "100m"
+          limits:
+            memory: "256Mi"     # don't le 256MB
+            cpu: "500m"
+
+        # 2. media variables
+        # for start we set them here later, we move them to ConfigMap
+        env:
+        - name: DB_HOST
+          value: "postgres-service" # data base name
+        - name: APP_ENV
+          value: "production"
+
+        # 3. ports
+        ports:
+        - containerPort: 8080   
+          name: http
+
+        # 4. Health Checks (Adaptate)
+        # check if container is alive
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 15
+        
+        # check if container is ready to serve traffic
+        readinessProbe:
+          tcpSocket:            # we set tcpSocket checks only the connection
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
