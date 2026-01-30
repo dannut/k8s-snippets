@@ -1,4 +1,4 @@
-# Kubernetes Snippets (k8s-snippets) ☸️
+# Kubernetes Snippets (k8s-snippets) 
 
 This repository contains a collection of reusable YAML snippets for common Kubernetes objects. The goal is to accelerate the development and deployment process by providing standardized, production-ready configurations.
 
@@ -6,10 +6,9 @@ This repository contains a collection of reusable YAML snippets for common Kuber
 
 Files are organized by resource type:
 
-```
-k8s-snippets/
-├── workloads/      # Deployments, StatefulSets, DaemonSets
-├── networking/     # Services, Ingress
-├── config/         # ConfigMaps, Secrets
-└── examples/       # Full stack examples
-```
+| file | type |
+| :--- | :--- |
+| `workloads/` | Deployments, StatefulSets, DaemonSets |
+| `networking/` | Services, Ingress, NetworkPolicies |
+| `config/` | ConfigMaps, Secrets |
+| `examples/` | Stack-uri complete pentru demo |
